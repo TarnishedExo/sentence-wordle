@@ -7,16 +7,24 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 h1 {
     font-size: 2em;
+    text-align: center;
+}
+
+#main-gameboard {
+    width: 100%;
+    max-width: 600px;
 }
 
 .game-board {
     display: grid;
-    grid-template-columns: repeat(14, 2em);
-    gap: 1.5em;
+    grid-template-columns: repeat(auto-fit, minmax(2em, 1fr));
+    gap: 0.5em;
     margin-bottom: 1em;
 }
 
@@ -39,6 +47,7 @@ h1 {
     justify-content: center;
     font-size: 1.5em;
 }
+
 .correct {
     background-color: #6aaa64;
 }
@@ -56,6 +65,7 @@ h1 {
     flex-wrap: wrap;
     justify-content: center;
     max-width: 600px;
+    gap: 0.5em;
 }
 
 .key {
@@ -82,10 +92,12 @@ h1 {
     background-color: #787c7e;
 }
 
-.hide-success{
+.hide-success {
     display: none;
 }
 
-.success{
+.success {
     display: block;
+    text-align: center;
+    font-size: 1.5em;
 }
