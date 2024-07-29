@@ -1,5 +1,5 @@
 const targetSentence = "You are   my life";
-const maxAttempts = 6;
+const maxAttempts = 10;
 let currentAttempt = 0;
 let currentGuess = "";
 let numberOfSpace = 0;
@@ -10,13 +10,15 @@ const mainGameBoard = document.getElementById("main-gameboard");
 const keyboard = document.getElementById("keyboard");
 const test = document.getElementById("test");
 const success = document.getElementById("yay");
-const hiddenInput = document.getElementById("hidden-input");
-
+const failed = document.getElementById("failed");
 // Create game board tiles
 for (let i = 0; i < maxAttempts; i++) {
     let currentSpaces = 0;
     const gb = document.createElement("div");
     gb.classList.add("game-board");
+    if(currentAttempt !== i){
+        gb.classList.add("hide-success");
+    }
     gb.setAttribute("id", `game-board-${i}`)
     mainGameBoard.appendChild(gb);
 
@@ -39,6 +41,7 @@ for (let i = 0; i < maxAttempts; i++) {
     const newLine = document.createElement("div");
     newLine.classList.add("emptyRow");
     mainGameBoard.appendChild(newLine);
+
 }
 
 // Create keyboard
@@ -108,7 +111,7 @@ function checkGuess() {
             tile.classList.add("absent");
         }
     }
-
+    
     if (currentGuess === removedSpacesText) {
         mainGameBoard.textContent = "";
         keyboard.textContent = "";
@@ -117,9 +120,11 @@ function checkGuess() {
         currentAttempt++;
         currentGuess = "";
         if (currentAttempt === maxAttempts) {
-            alert("Game Over! The correct sentence was: " + targetSentence);
+            failed.classList.add("success");
         }
     }
+    let test = document.getElementById(`game-board-${currentAttempt}`);
+    test.classList.remove("hide-success");
 }
 
 document.addEventListener("keydown", (event) => {
