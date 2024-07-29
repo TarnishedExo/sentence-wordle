@@ -1,0 +1,1 @@
+console.log('Engagement Wordle script loaded');
