@@ -1,4 +1,4 @@
-const targetSentence = "Will you marry me";
+const targetSentence = "You are   my life";
 const maxAttempts = 6;
 let currentAttempt = 0;
 let currentGuess = "";
@@ -92,8 +92,8 @@ function checkGuess() {
     }
 
     if (currentGuess === removedSpacesText) {
-        alert("Congratulations! Will you marry me?");
         mainGameBoard.textContent = "";
+        keyboard.textContent = "";
         success.classList.add("success");
     } else {
         currentAttempt++;
