@@ -13,10 +13,10 @@ h1 {
     font-size: 2em;
 }
 
-#game-board {
+.game-board {
     display: grid;
     grid-template-columns: repeat(14, 2em);
-    gap: 0.5em;
+    gap: 1.5em;
     margin-bottom: 1em;
 }
 
@@ -31,6 +31,14 @@ h1 {
     background-color: white;
 }
 
+.empty-tile{
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+}
 .correct {
     background-color: #6aaa64;
 }
@@ -72,4 +80,12 @@ h1 {
 
 .key.absent {
     background-color: #787c7e;
+}
+
+.hide-success{
+    display: none;
+}
+
+.success{
+    display: block;
 }

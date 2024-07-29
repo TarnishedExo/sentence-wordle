@@ -2,19 +2,42 @@ const targetSentence = "Will you marry me";
 const maxAttempts = 6;
 let currentAttempt = 0;
 let currentGuess = "";
+let numberOfSpace = 0;
 
-const gameBoard = document.getElementById("game-board");
+
+//const gameBoard = document.getElementById("game-board");
+const mainGameBoard = document.getElementById("main-gameboard");
 const keyboard = document.getElementById("keyboard");
 const test = document.getElementById("test");
+const success = document.getElementById("yay");
 
 // Create game board tiles
 for (let i = 0; i < maxAttempts; i++) {
+    let currentSpaces = 0;
+    const gb = document.createElement("div");
+    gb.classList.add("game-board");
+    gb.setAttribute("id", `game-board-${i}`)
+    mainGameBoard.appendChild(gb);
+
     for (let j = 0; j < targetSentence.length; j++) {
         const tile = document.createElement("div");
-        tile.classList.add("tile");
-        tile.setAttribute("id", `tile-${i}-${j}`);
-        gameBoard.appendChild(tile);
+        if(targetSentence[j] === " "){
+            tile.classList.add("empty-tile");
+            if(i === 0){
+                numberOfSpace++;
+            }
+            currentSpaces++;
+        }
+        else{
+            tile.classList.add("tile");
+            tile.setAttribute("id", `tile-${i}-${j-currentSpaces}`);
+        }
+        gb.appendChild(tile);
     }
+
+    const newLine = document.createElement("div");
+    newLine.classList.add("emptyRow");
+    mainGameBoard.appendChild(newLine);
 }
 
 // Create keyboard
@@ -28,35 +51,50 @@ keys.forEach(key => {
 });
 
 function handleKeyClick(key) {
-    if (currentGuess.length < targetSentence.length) {
+    if (currentGuess.length < targetSentence.length - numberOfSpace) {
         currentGuess += key;
         updateBoard();
     }
 }
 
 function updateBoard() {
+    let guessesEmpty = 0;
+
     for (let i = 0; i < currentGuess.length; i++) {
         const tile = document.getElementById(`tile-${currentAttempt}-${i}`);
         tile.textContent = currentGuess[i];
+        guessesEmpty++;
+    }
+    for(let j = guessesEmpty; j < targetSentence.length - numberOfSpace; j++){
+        const tile = document.getElementById(`tile-${currentAttempt}-${j}`);
+        tile.textContent = " ";
     }
 }
 
 function checkGuess() {
-    if (currentGuess.length !== targetSentence.length) return;
-
-    for (let i = 0; i < targetSentence.length; i++) {
+    if (currentGuess.length !== targetSentence.length - numberOfSpace) return;
+    let removedSpacesText = targetSentence
+    .split(" ")
+    .join("")
+    .toUpperCase();
+    console.log("Target Sentence - " + targetSentence);
+    console.log("Guessed Sentence - " + currentGuess);
+    console.log("Spaceless Sentence - " + removedSpacesText);
+    for (let i = 0; i < targetSentence.length - numberOfSpace; i++) {
         const tile = document.getElementById(`tile-${currentAttempt}-${i}`);
-        if (currentGuess[i] === targetSentence[i]) {
+        if (currentGuess[i] === removedSpacesText[i]) {
             tile.classList.add("correct");
-        } else if (targetSentence.includes(currentGuess[i])) {
+        } else if (removedSpacesText.includes(currentGuess[i])) {
             tile.classList.add("present");
         } else {
             tile.classList.add("absent");
         }
     }
 
-    if (currentGuess === targetSentence) {
+    if (currentGuess === removedSpacesText) {
         alert("Congratulations! Will you marry me?");
+        mainGameBoard.textContent = "";
+        success.classList.add("success");
     } else {
         currentAttempt++;
         currentGuess = "";
