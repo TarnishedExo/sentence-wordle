@@ -10,6 +10,7 @@ const mainGameBoard = document.getElementById("main-gameboard");
 const keyboard = document.getElementById("keyboard");
 const test = document.getElementById("test");
 const success = document.getElementById("yay");
+const hiddenInput = document.getElementById("hidden-input");
 
 // Create game board tiles
 for (let i = 0; i < maxAttempts; i++) {
@@ -49,6 +50,23 @@ keys.forEach(key => {
     keyButton.addEventListener("click", () => handleKeyClick(key));
     keyboard.appendChild(keyButton);
 });
+
+const enterButton = document.createElement("div");
+enterButton.classList.add("key");
+enterButton.setAttribute("id", "enter-key");
+enterButton.textContent = "entr";
+enterButton.addEventListener("click", () => checkGuess());
+keyboard.appendChild(enterButton);
+
+const backspaceButton = document.createElement("div");
+backspaceButton.classList.add("key");
+backspaceButton.setAttribute("id", "backspace-key");
+backspaceButton.textContent = "bck";
+backspaceButton.addEventListener("click", () => {
+    currentGuess = currentGuess.slice(0, -1);
+    updateBoard();
+});
+keyboard.appendChild(backspaceButton);
 
 function handleKeyClick(key) {
     if (currentGuess.length < targetSentence.length - numberOfSpace) {
