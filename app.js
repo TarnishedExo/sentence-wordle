@@ -1,4 +1,4 @@
-const targetSentence = "Forever   and a day";
+const targetSentence = "watermelons are the best";
 const maxAttempts = 10;
 let currentAttempt = 0;
 let currentGuess = "";
@@ -162,6 +162,8 @@ function checkGuess() {
         currentAttempt++;
         currentGuess = "";
         if (currentAttempt === maxAttempts) {
+            mainGameBoard.textContent = "";
+            keyboard.textContent = "";
             failed.classList.add("success");
         }
     }
