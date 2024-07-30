@@ -57,14 +57,14 @@ keys.forEach(key => {
 const enterButton = document.createElement("div");
 enterButton.classList.add("key");
 enterButton.setAttribute("id", "enter-key");
-enterButton.textContent = "entr";
+enterButton.textContent = "ENTER";
 enterButton.addEventListener("click", () => checkGuess());
 keyboard.appendChild(enterButton);
 
 const backspaceButton = document.createElement("div");
 backspaceButton.classList.add("key");
 backspaceButton.setAttribute("id", "backspace-key");
-backspaceButton.textContent = "bck";
+backspaceButton.textContent = "BACK";
 backspaceButton.addEventListener("click", () => {
     currentGuess = currentGuess.slice(0, -1);
     updateBoard();
