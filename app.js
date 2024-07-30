@@ -1,4 +1,4 @@
-const targetSentence = "You are   my life";
+const targetSentence = "Forever   and a day";
 const maxAttempts = 10;
 let currentAttempt = 0;
 let currentGuess = "";
@@ -98,19 +98,61 @@ function checkGuess() {
     .split(" ")
     .join("")
     .toUpperCase();
-    console.log("Target Sentence - " + targetSentence);
-    console.log("Guessed Sentence - " + currentGuess);
-    console.log("Spaceless Sentence - " + removedSpacesText);
+
+    let targetLetterCounts = {};
+    let guessLetterCounts = {};
+
+    // Count the occurrences of each letter in the target sentence (without spaces)
+    for (let char of removedSpacesText) {
+        if (!targetLetterCounts[char]) {
+            targetLetterCounts[char] = 0;
+        }
+        targetLetterCounts[char]++;
+    }
+
+    // Count the occurrences of each letter in the current guess
+    for (let char of currentGuess) {
+        if (!guessLetterCounts[char]) {
+            guessLetterCounts[char] = 0;
+        }
+        guessLetterCounts[char]++;
+    }
+
+    // First pass to mark correct letters
     for (let i = 0; i < targetSentence.length - numberOfSpace; i++) {
         const tile = document.getElementById(`tile-${currentAttempt}-${i}`);
         if (currentGuess[i] === removedSpacesText[i]) {
             tile.classList.add("correct");
-        } else if (removedSpacesText.includes(currentGuess[i])) {
+            targetLetterCounts[currentGuess[i]]--;
+            guessLetterCounts[currentGuess[i]]--;
+        }
+    }
+
+    // Second pass to mark present and absent letters
+    for (let i = 0; i < targetSentence.length - numberOfSpace; i++) {
+        const tile = document.getElementById(`tile-${currentAttempt}-${i}`);
+        if (tile.classList.contains("correct")) {
+            continue;
+        }
+        if (targetLetterCounts[currentGuess[i]] > 0) {
             tile.classList.add("present");
+            targetLetterCounts[currentGuess[i]]--;
         } else {
             tile.classList.add("absent");
         }
     }
+
+
+    //for (let i = 0; i < targetSentence.length - numberOfSpace; i++) {
+      //  const tile = document.getElementById(`tile-${currentAttempt}-${i}`);
+      //  if (currentGuess[i] === removedSpacesText[i]) {
+      //      tile.classList.add("correct");
+      //  } else if (removedSpacesText.includes(currentGuess[i])) {
+      //      tile.classList.add("present");
+      //  } else {
+      //      tile.classList.add("absent");
+      //  }
+   // }
     
     if (currentGuess === removedSpacesText) {
         mainGameBoard.textContent = "";
