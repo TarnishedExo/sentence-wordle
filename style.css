@@ -101,3 +101,20 @@ h1 {
     text-align: center;
     font-size: 1.5em;
 }
+
+#backspace-key {
+    width: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    color: white;
+}
+
+#enter-key {
+    width: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6aaa64;
+}
